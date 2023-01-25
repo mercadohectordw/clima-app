@@ -8,8 +8,8 @@ const port = 3000;
 
 app.use(express.json());
 app.use(cors({
-  credentials: true,
-  origin: ["http::localhost:4200"]
+  credentials: false,
+  origin: ["http://localhost:4200"]
 }))
 
 app.get("/api/weather", async (req, res) => {
@@ -31,11 +31,12 @@ app.get("/api/weather", async (req, res) => {
   };
   
   fetch(url, options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-  
-  res.status(200).send("oky");
+    .then(async (response) => {
+      res.status(200).json(await response.json());
+    })
+    .catch(err => {
+      res.status(400).send("Problema en el ingreso de datos.");
+    });
 });
 
 app.listen(port, () => {
