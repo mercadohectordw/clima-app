@@ -1,5 +1,9 @@
-<app-header></app-header>
-
-<router-outlet></router-outlet>
-
-<app-footer></app-footer>
+<div class="h-screen w-screen flex justify-center items-center">
+  <div class="relative w-[900px] h-[600px] bg-white/30 rounded-3xl border border-white/30 shadow-md">
+    <app-header></app-header>
+    
+    <router-outlet></router-outlet>
+    
+    <app-footer class="absolute bottom-0 w-full"></app-footer>
+  </div>
+</div>

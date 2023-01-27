@@ -1,1 +1,22 @@
-<p>header works!</p>
+<header class="w-full h-12 px-3 flex flex-row items-center justify-between border-b">
+  <a routerLink="/home" class="flex items-center gap-2">
+    <span class="material-symbols-rounded">partly_cloudy_day</span>
+    <h1 class="">Weather App</h1>
+  </a>
+  <nav class="">
+    <ul class="flex flex-row items-stretch gap-4">
+      <li class="">
+        <a routerLink="/home" routerLinkActive="bg-white/20" class="p-3 flex items-center gap-2">
+          <span class="material-symbols-rounded">home</span>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="">
+        <a routerLink="/history" routerLinkActive="bg-white/20" class="p-3 flex items-center gap-2">
+          <span class="material-symbols-rounded">history</span>
+          <span>Past Week</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
