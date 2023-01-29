@@ -10,6 +10,8 @@ export class HomeComponent implements OnInit {
 
   lang: string = "es";
   weatherData: any;
+  unit: string = "c";
+  loading: boolean = false;
 
   constructor(private weatherService: WeatherService) { }
 
@@ -2994,6 +2996,7 @@ export class HomeComponent implements OnInit {
   }
 
   getLocation(): void{
+    this.loading = true;
     navigator.geolocation.getCurrentPosition(position => {
       let {latitude, longitude} = position.coords;
 
@@ -3004,7 +3007,8 @@ export class HomeComponent implements OnInit {
       }
 
       this.weatherService.getWeather(body).subscribe((data) => {
-        this.weatherData = data;        
+        this.weatherData = data;
+        this.loading = false;
       }, (err) => {
         console.log = err.error;
       });
@@ -3013,5 +3017,8 @@ export class HomeComponent implements OnInit {
 
   changeLanguage(newLang:string): void{
     this.lang = newLang;
+  }
+  changeUnits(newUnit:string): void{
+    if(newUnit == "c" || newUnit == "f") this.unit = newUnit;
   }
 }

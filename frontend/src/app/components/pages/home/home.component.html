@@ -1,17 +1,67 @@
-<main class="w-full px-3">
-  <button (click)="getLocation();">actualizar</button>
+<div *ngIf="loading" class="absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
+  <img src="assets/loading.svg" alt="loading...">
+</div>
 
-  <h2>
-    {{weatherData.location.name}},
-    <span class="text-white/50">{{weatherData.location.region}}, {{weatherData.location.country}}</span>
+<main *ngIf="!loading" class="w-full p-3">
+  <h2 class="text-2xl cursor-pointer" (click)="getLocation();">
+    {{weatherData.location.name}}
+    <span class="text-lg opacity-75">{{weatherData.location.region}}, {{weatherData.location.country}}</span>
   </h2>
   
-  <div>
-    <section>
-      <img src="assets/weather-icons/{{weatherData.current.is_day == 1 ? 'day' : 'night'}}/{{weatherData.current.condition.code}}.svg" alt="{{weatherData.current.condition.text}}" width="200px">
+  <div class="flex flex-row ">
+    <section class="basis-1/2"> <!-- current -->
+      <article class="flex items-center">
+        <div class="basis-1/2">
+          <img src="assets/weather-icons/{{weatherData.current.is_day == 1 ? 'day' : 'night'}}/{{weatherData.current.condition.code}}.svg" alt="{{weatherData.current.condition.text}}" class="w-full">
+        </div>
+        <div *ngIf="unit == 'c'" class="basis-1/2">
+          <div>
+            {{weatherData.current.condition.text}}
+          </div>
+          <div class="text-4xl my-2">
+            {{weatherData.current.temp_c}}ºC
+            <span (click)="changeUnits('f');" class="text-base cursor-pointer hover:font-bold">
+              {{weatherData.current.temp_f}}ºF
+            </span>
+          </div>
+          <div class="opacity-75">
+            Feel's like {{weatherData.current.feelslike_c}}ºC
+          </div>
+          <div class="text-sm opacity-50 hover:opacity-70 duration-500">
+            <div>Humidity {{weatherData.current.humidity}} %</div>
+            <div>Visibility {{weatherData.current.vis_km}} km</div>
+            <div>Wind direction {{weatherData.current.wind_dir}} {{20}}º</div>
+            <div>Wind speed {{weatherData.current.wind_kph}} km/h</div>
+          </div>
+        </div>
+
+        <div *ngIf="unit == 'f'" class="basis-1/2">
+          <div>
+            {{weatherData.current.condition.text}}
+          </div>
+          <div class="text-4xl my-2">
+            {{weatherData.current.temp_f}}ºF
+            <span (click)="changeUnits('c');" class="text-base cursor-pointer hover:font-bold">
+              {{weatherData.current.temp_c}}ºC
+            </span>
+          </div>
+          <div class="opacity-75">
+            Feel's like {{weatherData.current.feelslike_f}}ºF
+          </div>
+          <div class="text-sm opacity-50 hover:opacity-70 duration-500">
+            <div>Humidity {{weatherData.current.humidity}} %</div>
+            <div>Visibility {{weatherData.current.vis_miles}} miles</div>
+            <div>Wind direction {{weatherData.current.wind_dir}} {{20}}º</div>
+            <div>Wind speed {{weatherData.current.wind_mph}} m/h</div>
+          </div>
+        </div>
+      </article>
+
+
     </section>
-    <section>
-    
+
+    <section class="basis-1/2"> <!-- forecast -->
+      
     </section>
   </div>
 </main>
