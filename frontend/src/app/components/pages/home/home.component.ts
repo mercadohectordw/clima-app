@@ -2988,7 +2988,7 @@ export class HomeComponent implements OnInit {
         ]
       }
     }
-
+    
     // Solicita la ubicación de la IP, envia la petición del clima a la api y la recibe los datos en la varible 'weatherData'.
     //this.getLocation(); 
   }

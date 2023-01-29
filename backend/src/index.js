@@ -31,8 +31,9 @@ app.post("/api/weather", async (req, res) => {
   };
   
   fetch(url, options)
-    .then(async (response) => {
-      res.status(200).json(await response.json());
+    .then( async(response) => {
+      let weatherComplete = await response.json();
+      res.status(200).json(weatherComplete);
     })
     .catch(err => {
       res.status(400).send("Problema en el ingreso de datos.");

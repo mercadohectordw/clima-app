@@ -1,3 +1,17 @@
-<p>home works!</p>
+<main class="w-full px-3">
+  <button (click)="getLocation();">actualizar</button>
 
-<div>{{weatherData}}</div>
+  <h2>
+    {{weatherData.location.name}},
+    <span class="text-white/50">{{weatherData.location.region}}, {{weatherData.location.country}}</span>
+  </h2>
+  
+  <div>
+    <section>
+      <img src="assets/weather-icons/{{weatherData.current.is_day == 1 ? 'day' : 'night'}}/{{weatherData.current.condition.code}}.svg" alt="{{weatherData.current.condition.text}}" width="200px">
+    </section>
+    <section>
+    
+    </section>
+  </div>
+</main>
