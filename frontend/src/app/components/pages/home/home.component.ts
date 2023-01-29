@@ -8,7 +8,7 @@ import { WeatherService } from 'src/app/services/weather.service';
 })
 export class HomeComponent implements OnInit {
 
-  lang: string = "es";
+  lang: string = "en";
   weatherData: any;
   unit: string = "c";
   loading: boolean = false;
@@ -16,6 +16,11 @@ export class HomeComponent implements OnInit {
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
+    let l = localStorage.getItem("lang");
+    let u = localStorage.getItem("unit");
+
+    if(l=="es" || l=="en"){this.lang = l;}
+    if(u=="c" || u=="f"){this.unit = u;}
 
     this.weatherData = {
       "location": {
@@ -3015,10 +3020,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  changeLanguage(newLang:string): void{
-    this.lang = newLang;
-  }
   changeUnits(newUnit:string): void{
-    if(newUnit == "c" || newUnit == "f") this.unit = newUnit;
+    if(newUnit == "c" || newUnit == "f") {
+      localStorage.setItem("unit", newUnit);
+      this.unit = newUnit;
+    };
   }
 }

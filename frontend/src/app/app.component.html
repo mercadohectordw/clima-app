@@ -1,9 +1,11 @@
 <div class="h-screen w-screen flex justify-center items-center">
-  <div class="relative w-[900px] h-[600px] bg-white/30 rounded-3xl border border-white/30 shadow-md">
-    <app-header></app-header>
+  <div class="relative w-[900px] h-[650px] bg-white/30 rounded-3xl border border-white/30 shadow-md flex flex-col">
+    <app-header class=""></app-header>
     
-    <router-outlet></router-outlet>
+    <div class="grow">
+      <router-outlet></router-outlet>
+    </div>
     
-    <app-footer class="absolute bottom-0 w-full"></app-footer>
+    <app-footer class=""></app-footer>
   </div>
 </div>
