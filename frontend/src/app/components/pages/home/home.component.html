@@ -10,7 +10,7 @@
     </h2>
   </div>
   
-  <div class="h-[92%] grid grid-cols-2 grid-rows-2">
+  <div class="h-[92%] grid grid-cols-2 grid-rows-2 gap-2">
     <article class="flex items-center"> <!-- current -->
       <div class="basis-1/2">
         <img src="assets/weather-icons/{{weatherData.current.is_day == 1 ? 'day' : 'night'}}/{{weatherData.current.condition.code}}.svg" alt="{{weatherData.current.condition.text}}" class="w-full">
@@ -58,16 +58,28 @@
       </div>
     </article>
 
-    <article><!-- astro -->
-
-    </article>
-  
-    <article><!-- astro -->
+    <article class=""><!-- dias -->
 
     </article>
 
-    <article><!-- astro -->
-
+    <article class="col-span-2 py-2 flex flex-row justify-center items-center"><!-- hora a hora -->
+      <div *ngFor="let forecastday of weatherData.forecast.forecastday; index as i" class="basis-1/5">
+        <div class="h-14 flex flex-col justify-end">
+          <span class="text-center"> {{i<2 ? i==0 ? "Today": "Tomorrow" : forecastday.date.slice(5)}}</span>
+          <span *ngIf="i<2" class="text-center text-black/50">{{forecastday.date.slice(5)}}</span>
+        </div>
+        
+        <div class="w-full h-24 flex items-center mb-2">
+          <img src="assets/weather-icons/day/{{forecastday.day.condition.code}}.svg" alt="{{forecastday.day.condition.text}}" class="w-2/3 mx-auto">
+        </div>
+        
+        <div *ngIf="unit != 'f'" class="text-sm text-center text-black">
+          <span class="">{{forecastday.day.maxtemp_c}}º</span> - <span class="opacity-60">{{forecastday.day.mintemp_c}}º</span>
+        </div>
+        <div *ngIf="unit == 'f'" class="text-sm text-center text-black">
+          <span class="">{{forecastday.day.maxtemp_f}}º</span> - <span class="opacity-60">{{forecastday.day.mintemp_f}}º</span>
+        </div>
+      </div>
     </article>
   </div>
 
