@@ -11,10 +11,11 @@
   </div>
   
   <div class="h-[92%] grid grid-cols-2 grid-rows-2 gap-2">
-    <article class="flex items-center"> <!-- current -->
+    <section class="flex items-center"> <!-- current -->
       <div class="basis-1/2">
         <img src="assets/weather-icons/{{weatherData.current.is_day == 1 ? 'day' : 'night'}}/{{weatherData.current.condition.code}}.svg" alt="{{weatherData.current.condition.text}}" class="w-full">
       </div>
+      
       <div *ngIf="unit != 'f'" class="basis-1/2">
         <div>
           {{weatherData.current.condition.text}}
@@ -56,34 +57,68 @@
           <div>Wind speed {{weatherData.current.wind_mph}} m/h</div>
         </div>
       </div>
-    </article>
+    </section>
 
-    <article class=""><!-- dias -->
-
-    </article>
-
-    <article class="col-span-2 py-2 flex flex-row justify-center items-center"><!-- hora a hora -->
-      <div *ngFor="let forecastday of weatherData.forecast.forecastday; index as i" class="basis-1/5">
+    <section class="py-2 flex flex-row justify-center items-center"><!-- dias -->
+      <div *ngFor="let forecastday of weatherData.forecast.forecastday; index as i" class="basis-1/3">
         <div class="h-14 flex flex-col justify-end">
           <span class="text-center"> {{i<2 ? i==0 ? "Today": "Tomorrow" : forecastday.date.slice(5)}}</span>
-          <span *ngIf="i<2" class="text-center text-black/50">{{forecastday.date.slice(5)}}</span>
+          <span *ngIf="i<2" class="text-center opacity-50">{{forecastday.date.slice(5)}}</span>
         </div>
         
         <div class="w-full h-24 flex items-center mb-2">
           <img src="assets/weather-icons/day/{{forecastday.day.condition.code}}.svg" alt="{{forecastday.day.condition.text}}" class="w-2/3 mx-auto">
         </div>
         
-        <div *ngIf="unit != 'f'" class="text-sm text-center text-black">
+        <div *ngIf="unit != 'f'" class="text-sm text-center">
           <span class="">{{forecastday.day.maxtemp_c}}º</span> - <span class="opacity-60">{{forecastday.day.mintemp_c}}º</span>
         </div>
-        <div *ngIf="unit == 'f'" class="text-sm text-center text-black">
+        <div *ngIf="unit == 'f'" class="text-sm text-center">
           <span class="">{{forecastday.day.maxtemp_f}}º</span> - <span class="opacity-60">{{forecastday.day.mintemp_f}}º</span>
         </div>
       </div>
-    </article>
-  </div>
+    </section>
 
-  <div class="">
+    <section class="col-span-2 flex flex-col items-center justify-center"><!-- horas y astro -->
+      <article class="text-xs flex gap-2"><!-- astro -->
+        <div class="flex items-center">
+          <img src="assets/astro/sunrise.svg" alt="Sunrise" class="w-12">
+          <span class="pr-1">{{weatherData.forecast.forecastday[0].astro.sunrise}}</span>
+        </div>
+        <div class="flex items-center">
+          <img src="assets/astro/sunset.svg" alt="Sunset" class="w-12">
+          <span class="pr-1">{{weatherData.forecast.forecastday[0].astro.sunset}}</span>
+        </div>
+        <div class="flex items-center">
+          <img src="assets/astro/moonrise.svg" alt="Moonrise" class="w-12">
+          <span class="pr-1">{{weatherData.forecast.forecastday[0].astro.moonrise}}</span>
+        </div>
+        <div class="flex items-center">
+          <img src="assets/astro/moonset.svg" alt="Moonset" class="w-12">
+          <span class="pr-1">{{weatherData.forecast.forecastday[0].astro.moonset}}</span>
+        </div>
+      </article>
+      
+      <article class="w-full flex flex-row gap-3 bg-blue-200/70 rounded-lg px-4 text-center text-sm"><!-- horas -->
+        <div *ngFor="let hr of prox12hrs; index as i" class="leading-none basis-full py-4"
+          [ngClass]="i==0 || i==1 ? i == 1 ? 'bg-white/20' : 'opacity-50' : ''">
+          <div class="pt-1">
+            <div *ngIf="unit != 'f'">{{hr.temp_c.toString().split(".")[0]}}º</div>
+            <div *ngIf="unit == 'f'">{{hr.temp_f.toString().split(".")[0]}}º</div>
+          </div>
 
+          <div class="h-8 flex items-center justify-center mb-1">
+            <div *ngIf="hr.will_it_rain == 0 && hr.will_it_snow == 0" class="w-3 h-[3px] bg-black/20"> </div>
+
+            <img *ngIf="hr.will_it_rain == 1" src="assets/weather-icons/caract/raindrop.svg" alt="rain" class="w-1/2">
+            <img *ngIf="hr.will_it_snow == 1" src="assets/weather-icons/caract/snowflake.svg" alt="snow" class="w-1/2">
+          </div>
+
+          <div class="inline-block">{{hr.time.split(" ")[1].split(":")[0]}} 
+            <span class="text-[10px] opacity-50">hs</span>
+          </div>
+        </div>
+      </article>
+    </section>
   </div>
 </main>

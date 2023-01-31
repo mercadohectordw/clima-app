@@ -7,21 +7,19 @@ import { WeatherService } from 'src/app/services/weather.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  lang: string = "en";
-  weatherData: any;
-  unit: string = "c";
   loading: boolean = false;
+  
+  latitude?: number;
+  longitude?: number;
+  lang: string = "en";
+  unit: string = "c";
+  
+  weatherData: any;
+  prox12hrs: any;
 
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    let l = localStorage.getItem("lang");
-    let u = localStorage.getItem("unit");
-
-    if(l=="es" || l=="en"){this.lang = l;}
-    if(u=="c" || u=="f"){this.unit = u;}
-
     this.weatherData = {
       "location": {
         "name": "Pontevedra",
@@ -2995,29 +2993,67 @@ export class HomeComponent implements OnInit {
         ]
       }
     }
-    
-    // Solicita la ubicación de la IP, envia la petición del clima a la api y la recibe los datos en la varible 'weatherData'.
-    //this.getLocation(); 
+    this.getProx12Hours(this.weatherData);
+
+    /*
+    this.loadLangAndUnit();//se obtienen el lenguaje y las unidades preseleccionadas
+    this.getLocation();//se obtiene la localizacion de la IP
+    this.getWeather();//se obtiene el pronostico del clima
+    */
+  }
+
+  loadLangAndUnit(): void{
+    let l = localStorage.getItem("lang");
+    let u = localStorage.getItem("unit");
+    if(l=="es" || l=="en"){this.lang = l;}
+    if(u=="c" || u=="f"){this.unit = u;}
   }
 
   getLocation(): void{
-    this.loading = true;
     navigator.geolocation.getCurrentPosition(position => {
       let {latitude, longitude} = position.coords;
 
-      let body = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "lang": this.lang
-      }
-
-      this.weatherService.getWeather(body).subscribe((data) => {
-        this.weatherData = data;
-        this.loading = false;
-      }, (err) => {
-        console.log = err.error;
-      });
+      this.latitude = latitude;
+      this.longitude = longitude
     });
+  }
+
+  getWeather(): void{
+    this.loading = true;
+    
+    if(!this.latitude || !this.longitude){
+      this.getLocation();
+    }
+
+    let body = {
+      "latitude": this.latitude,
+      "longitude": this.longitude,
+      "lang": this.lang
+    }
+
+    this.weatherService.getWeather(body).subscribe((data) => {
+      this.weatherData = data;
+      this.getProx12Hours(data);
+      this.loading = false;
+    }, (err) => {
+      console.log = err.error;
+    });
+  }
+
+  getProx12Hours(weatherData:any): void{
+    let currentHour = Number(weatherData.location.localtime
+      .split(" ")[1]
+      .split(":")[0]);
+
+    this.prox12hrs = new Array( weatherData.forecast.forecastday[0].hour[currentHour - 1]);
+
+    for(let i = currentHour; i < currentHour + 11; i++){
+      let hour = weatherData.forecast.forecastday[0].hour[i] 
+      ? weatherData.forecast.forecastday[0].hour[i]
+      : weatherData.forecast.forecastday[1].hour[i-24];
+      
+      this.prox12hrs.push(hour);
+    }
   }
 
   changeUnits(newUnit:string): void{
