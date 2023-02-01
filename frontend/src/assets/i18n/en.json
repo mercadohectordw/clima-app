@@ -1,0 +1,22 @@
+{
+  "partials":{
+    "made": "Made by Hector Mercado",
+    "github": "See on Github",
+    "credits":{
+      "icons": "Weather icons from",
+      "data": "Data supplied by"
+    }
+  },
+  "home":{
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+
+    "feel": "Feel's like",
+    "humidity": "Humidity",
+    "visibility": "Visibility",
+    "wind_dir": "Wind direction",
+    "wind_speed": "Wind speed",
+    
+    "hours": "Hour by hour"
+  }
+}
