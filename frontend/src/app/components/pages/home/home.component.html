@@ -4,7 +4,7 @@
 
 <main *ngIf="!loading" class="w-full h-full p-3">
   <div class="h-[8%]">
-    <h2 class="text-3xl cursor-pointer" (click)="getLocation();">
+    <h2 class="text-3xl cursor-pointer" (click)="getWeather();">
       {{weatherData.location.name}}
       <span class="text-lg opacity-75">{{weatherData.location.region}}, {{weatherData.location.country}}</span>
     </h2>

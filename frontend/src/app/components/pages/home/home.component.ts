@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
+    /*
     this.weatherData = {
       "location": {
         "name": "Pontevedra",
@@ -2994,12 +2995,10 @@ export class HomeComponent implements OnInit {
       }
     }
     this.getProx12Hours(this.weatherData);
-
-    /*
-    this.loadLangAndUnit();//se obtienen el lenguaje y las unidades preseleccionadas
-    this.getLocation();//se obtiene la localizacion de la IP
-    this.getWeather();//se obtiene el pronostico del clima
     */
+
+    this.loadLangAndUnit();//se obtienen el lenguaje y las unidades preseleccionadas
+    this.getWeather();//se obtiene el pronostico del clima
   }
 
   loadLangAndUnit(): void{
@@ -3009,35 +3008,42 @@ export class HomeComponent implements OnInit {
     if(u=="c" || u=="f"){this.unit = u;}
   }
 
-  getLocation(): void{
-    navigator.geolocation.getCurrentPosition(position => {
-      let {latitude, longitude} = position.coords;
+  getLocation(): Promise<void>{
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(position => {
+        let {latitude, longitude} = position.coords;
+  
+        this.latitude = latitude;
+        this.longitude = longitude;
 
-      this.latitude = latitude;
-      this.longitude = longitude
+        resolve();
+      });
     });
   }
 
   getWeather(): void{
     this.loading = true;
     
-    if(!this.latitude || !this.longitude){
-      this.getLocation();
+    if(this.latitude && this.longitude){
+      let body = {
+        "latitude": this.latitude,
+        "longitude": this.longitude,
+        "lang": this.lang
+      }
+  
+      this.weatherService.getWeather(body).subscribe((data) => {
+        this.weatherData = data;
+        this.getProx12Hours(this.weatherData);
+        
+        this.loading = false;
+      }, (err) => {
+        console.log = err.error;
+      });
+    } else {
+      this.getLocation().then(() =>
+        this.getWeather()
+      );
     }
-
-    let body = {
-      "latitude": this.latitude,
-      "longitude": this.longitude,
-      "lang": this.lang
-    }
-
-    this.weatherService.getWeather(body).subscribe((data) => {
-      this.weatherData = data;
-      this.getProx12Hours(data);
-      this.loading = false;
-    }, (err) => {
-      console.log = err.error;
-    });
   }
 
   getProx12Hours(weatherData:any): void{
