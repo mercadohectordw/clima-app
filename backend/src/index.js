@@ -4,13 +4,17 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
   credentials: false,
   origin: ["http://localhost:4200"]
 }))
+
+app.get("/api/test", (req, res) => {
+  res.status(200).send("Todo OK");
+});
 
 app.post("/api/weather", async (req, res) => {
   
