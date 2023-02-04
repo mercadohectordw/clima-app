@@ -1,0 +1,22 @@
+{
+  "partials":{
+    "made": "Hecho por Hector Mercado",
+    "github": "Ver en Github",
+    "credits":{
+      "icons": "Iconos del clima de",
+      "data": "Datos provistos por"
+    }
+  },
+  "home":{
+    "today": "Hoy",
+    "tomorrow": "Mañana",
+
+    "feel": "Sensación Térmica",
+    "humidity": "Humedad",
+    "visibility": "Visibilidad",
+    "wind_dir": "Dirección del viento",
+    "wind_speed": "Velocidad del viento",
+    
+    "hours": "Hora a hora"
+  }
+}
