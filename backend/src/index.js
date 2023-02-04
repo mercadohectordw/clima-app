@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const fetch = require('node-fetch');
 require('dotenv').config();
 
@@ -6,6 +7,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors({
+  origin: '*',
+}))
 
 app.get("/api/test", (req, res) => {
   res.status(200).send("Todo OK");
