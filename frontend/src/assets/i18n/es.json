@@ -11,11 +11,11 @@
     "today": "Hoy",
     "tomorrow": "Mañana",
 
-    "feel": "Sensación Térmica",
+    "feel": "Sensación",
     "humidity": "Humedad",
     "visibility": "Visibilidad",
-    "wind_dir": "Dirección del viento",
-    "wind_speed": "Velocidad del viento",
+    "wind_dir": "Dir. del viento",
+    "wind_speed": "Vel. del viento",
     
     "hours": "Hora a hora"
   }

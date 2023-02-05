@@ -1,14 +1,30 @@
-<header class="w-full h-12 px-6 flex flex-row items-center justify-between border-b">
+<header class="w-full h-12 px-3 lg:px-6 flex flex-row items-center justify-between border-b">
   <a routerLink="/home" class="flex items-center gap-2">
     <span class="material-symbols-rounded">partly_cloudy_day</span>
     <h1 class="">Weather App</h1>
   </a>
-  <div class="">
-    <button type="button" (click)="changeLang('es');" class="w-24 text-center p-3 opacity-75 hover:bg-white/40"
+
+  <button type="button" class="sm:hidden relative p-2 leading-3" (click)="displayLangSelection();">
+    <span class="material-symbols-rounded">language</span>
+
+    <div id="langSelection" class="absolute bottom-0 right-0 z-50 translate-y-full bg-blue-200 rounded-md p-3" style="display: none;">
+      <button type="button" (click)="changeLang('es');" class="w-20 text-center p-3 opacity-75 rounded-md"
+        [ngClass]="lang=='es' ? 'bg-white' : ''" >
+        Español
+      </button>
+      <button type="button" (click)="changeLang('en');" class="w-20 text-center p-3 opacity-75 rounded-md"
+        [ngClass]="lang=='en' ? 'bg-white' : ''" >
+        English
+      </button>
+    </div>
+  </button>
+
+  <div class="hidden sm:block">
+    <button type="button" (click)="changeLang('es');" class="w-20 text-center p-3 opacity-75 hover:bg-white/40"
       [ngClass]="lang=='es' ? 'bg-white/20' : ''" >
       Español
     </button>
-    <button type="button" (click)="changeLang('en');" class="w-24 text-center p-3 opacity-75 hover:bg-white/40"
+    <button type="button" (click)="changeLang('en');" class="w-20 text-center p-3 opacity-75 hover:bg-white/40"
       [ngClass]="lang=='en' ? 'bg-white/20' : ''" >
       English
     </button>

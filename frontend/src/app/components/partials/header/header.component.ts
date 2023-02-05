@@ -23,4 +23,16 @@ export class HeaderComponent implements OnInit {
       window.location.reload();
     }
   }
+
+  displayLangSelection():void{
+    let langSelection = document.getElementById("langSelection")?.style;
+
+    if(langSelection){
+      if(langSelection?.display == "none"){
+        langSelection.display = "block";
+      } else {
+        langSelection.display = "none";
+      }
+    }
+  }
 }
